@@ -1,114 +1,100 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
-#include <fstream>
 
-void menudeOpciones();
-void escribirArchivo();
-void leerArchivo();
+void dividir(int a[], int inicial, int final);
+void fusionar(int a[],int pinicial,int pfinal,int medio);
 
 
-int main(){
-  
- menudeOpciones();
-  
-}
-
-void menudeOpciones(){
-
-int opc;
-
-do{
- cout<<"\t\t\t******MENU**********"<<endl;
- cout<<"  \t\t1- INGRESAR DATOS"<<endl;
- cout<<"  \t\t2- MOSTRAR DATOS"<<endl;
- cout<<"Ingrese el numero de su opcion: "<<endl;
- cin>>opc;
-  switch(opc){
-  case  1:
-
-   escribirArchivo();
-
-  break;
-
-  case 2:
-
-    leerArchivo();
-  break;
-  }
-
-} while (opc != 2);
-
-}
-
-void escribirArchivo()
+int main()
 {
-  
-   string nombre;
-   string apellido;
-   string carrera;
-   int edad;
-   char n;
-    ofstream archivoprueba;
-    string nombrearchivo;
-    cout<<"EL NOMBRE DE SU LIBRETA ES >> libreta.txt << \n";
-    cout<<"INGRESE NOMBRE DEL ARCHIVO \n";
-    while(getchar()!='\n'); 
-    getline(cin,nombrearchivo);
-    archivoprueba.open(nombrearchivo.c_str(),ios::out );
+    int A[10];
+    //COMENZAR CON LA SEMILLA
+    srand(time(0));
 
-  do{
-    cout<<"---------------------------------------------\n";
-   cout<<"INGRESE EL NOMBRE: ";
-   getline(cin,nombre);
+    for(int i=0; i< 7; i++)
+    {
+        //LLENAR EL ARREGLO CON VALORES DESDE EL 1 HASTA EL 19
+        A[i]=1+rand()%(50-1);
+    }
 
-   cout<<"INGRESE EL APELLIDO: ";
-   getline(cin,apellido);
+    cout<<endl;
 
-   cout<<"INGRESE LA CARRERA: ";
-   getline(cin,carrera);
+    for(int i=0; i< 7; i++)
+    {
+        cout<<"|"<<A[i]<<"|";
+    }
 
-   cout<<"INGRESE LA EDAD: ";
-   cin>>edad;
-   
-   archivoprueba<<nombre<<" "<<apellido<<" "<<carrera<<" "<<edad<<endl;
-   cout<<"---------------------------------------------\n";
-   cout<<"DESEA INGRESAR OTRO CONTACTO S/N ";
-   cin>>n;
-   cin.ignore();
+    dividir(A,0,6);
 
-  }while(n=='s');
-   
-   archivoprueba.close();
+    cout<<endl;
+     cout<<endl;
+
+    for(int i=0; i< 7; i++)
+    {
+        cout<<"|"<<A[i]<<"|";
+    }
+
+
+    return 0;
 }
 
 
-void leerArchivo()
+
+void dividir(int a[], int inicial, int final)
 {
- string nombre;
- string apellido;
- string carrera;
- int edad;
+    int mitad;
+    if(inicial < final)
+    {
+        mitad=(inicial+final)/2;
+        dividir(a,inicial,mitad);
+        dividir(a,mitad+1,final);
+        fusionar(a,inicial,final,mitad);
+    }
 
- ifstream archivolectura("libreta.txt");
- string texto;
-   cout<<"---------------------------------------------\n";
-   cout<<"\t\t*** CONTACTOS REGISTRADOS *** \n";
- while(!archivolectura.eof())
- {
-  archivolectura>>nombre>>apellido>>carrera>>edad;
 
-  if (!archivolectura.eof()){
+}
 
-   
-   cout<<"\t>> NOMBRE "<<nombre<<endl;
-   cout<<"\t>> APELLIDO "<<apellido<<endl;
-   cout<<"\t>> CARRERA "<<carrera<<endl;
-   cout<<"\t>> EDAD "<<edad<<endl;
-  cout<<"---------------------------------------------\n";
-  }
 
- }
 
-archivolectura.close();
+void fusionar(int a[],int pinicial,int pfinal,int medio)
+{
+    int i,j,k, temp[pfinal-pinicial+1];
+    i=pinicial;
+    k=0;
+    j=medio+1;
+
+    while(i<=medio && j<=pfinal)
+    {
+        if(a[i]<a[j])
+        {
+            temp[k]=a[i];
+            k++;
+            i++;
+        }
+        else
+        {
+            temp[k]=a[j];
+            k++;
+            j++;
+        }
+    }
+    while (i<=medio)
+    {
+        temp[k] = a[i];
+        k++;
+        i++;
+    }
+    while(j<=pfinal)
+    {
+        temp[k]=a[j];
+        k++;
+        j++;
+    }
+
+    for(i=pinicial; i<=pfinal; i++)
+    {
+        a[i]= temp[i-pinicial];
+    }
 }
 
