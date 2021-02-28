@@ -1,0 +1,8 @@
+
+Arreglo ordenado: 
+ 12  12  15 
+La cantidad de numeros positivos son:3
+
+La cantidad de numeros negativos son:0
+
+La cantidad de Ceros Son:0
