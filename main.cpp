@@ -1,114 +1,123 @@
 #include <iostream>
-using namespace std;
 #include <fstream>
+using namespace std;
 
-void menudeOpciones();
-void escribirArchivo();
-void leerArchivo();
+void algoritmoInserccion(int a[], int n);
 
+void algoritmoInterpolacion (int a[], int n);
 
-int main(){
-  
- menudeOpciones();
-  
-}
+void impirmirElementos(int a[], int n);
+void ingresar (int a[], int n);
 
-void menudeOpciones(){
-
-int opc;
-
-do{
- cout<<"\t\t\t******MENU**********"<<endl;
- cout<<"  \t\t1- INGRESAR DATOS"<<endl;
- cout<<"  \t\t2- MOSTRAR DATOS"<<endl;
- cout<<"Ingrese el numero de su opcion: "<<endl;
- cin>>opc;
-  switch(opc){
-  case  1:
-
-   escribirArchivo();
-
-  break;
-
-  case 2:
-
-    leerArchivo();
-  break;
-  }
-
-} while (opc != 2);
-
-}
-
-void escribirArchivo()
+int main()
 {
-  
-   string nombre;
-   string apellido;
-   string carrera;
-   int edad;
-   char n;
-    ofstream archivoprueba;
-    string nombrearchivo;
-    cout<<"EL NOMBRE DE SU LIBRETA ES >> libreta.txt << \n";
-    cout<<"INGRESE NOMBRE DEL ARCHIVO \n";
-    while(getchar()!='\n'); 
-    getline(cin,nombrearchivo);
-    archivoprueba.open(nombrearchivo.c_str(),ios::out );
+    fstream archivo;
+    archivo.open("insercion.txt", ios::app);
+    int n, cont;
+    int A[100];
+    cout << "Ingrese el tamanio del arreglo: ";
+    cin >>n;
+    archivo << "El tamanio del arreglo: " <<n;
+    for (int i=0;  i<n; i++)
+    {
+      cout << "Ingrese el elemento: ";
+      cin >> A[i];
+      cont= cont + A[i];
+    }
+    archivo << "\nLa suma del arreglo es: " <<cont;
+    impirmirElementos (A,n);
+    cout<<"\n";
+    algoritmoInserccion(A,n);
+    cout<<"\n";
+    impirmirElementos (A,n);
+    cout<<"\n";
+    algoritmoInterpolacion(A,n);
 
-  do{
-    cout<<"---------------------------------------------\n";
-   cout<<"INGRESE EL NOMBRE: ";
-   getline(cin,nombre);
 
-   cout<<"INGRESE EL APELLIDO: ";
-   getline(cin,apellido);
-
-   cout<<"INGRESE LA CARRERA: ";
-   getline(cin,carrera);
-
-   cout<<"INGRESE LA EDAD: ";
-   cin>>edad;
-   
-   archivoprueba<<nombre<<" "<<apellido<<" "<<carrera<<" "<<edad<<endl;
-   cout<<"---------------------------------------------\n";
-   cout<<"DESEA INGRESAR OTRO CONTACTO S/N ";
-   cin>>n;
-   cin.ignore();
-
-  }while(n=='s');
-   
-   archivoprueba.close();
 }
 
 
-void leerArchivo()
+void impirmirElementos(int a[], int n)
 {
- string nombre;
- string apellido;
- string carrera;
- int edad;
+    fstream archivo;
+    archivo.open("insercion.txt", ios::app);
+    for(int i=0; i<n; i++)
+    {
+        archivo<<"|"<<a[i]<<"|";
+        cout<<"|"<<a[i]<<"|";
+    }
+    archivo<<endl;
+    archivo.close();
+}
 
- ifstream archivolectura("libreta.txt");
- string texto;
-   cout<<"---------------------------------------------\n";
-   cout<<"\t\t*** CONTACTOS REGISTRADOS *** \n";
- while(!archivolectura.eof())
- {
-  archivolectura>>nombre>>apellido>>carrera>>edad;
 
-  if (!archivolectura.eof()){
+void algoritmoInserccion(int a[], int n)
+{
+    int pos,aux;
+    for(int i=0; i<n; i++)
+    {
+        pos=i;
 
-   
-   cout<<"\t>> NOMBRE "<<nombre<<endl;
-   cout<<"\t>> APELLIDO "<<apellido<<endl;
-   cout<<"\t>> CARRERA "<<carrera<<endl;
-   cout<<"\t>> EDAD "<<edad<<endl;
-  cout<<"---------------------------------------------\n";
-  }
+        aux=a[i];
 
- }
+        while((pos>0)&&(a[pos-1]>aux))
+        {
+            a[pos] = a[pos-1];
 
-archivolectura.close();
+            pos--;
+
+        }
+
+        a[pos]=aux;
+    }
+
+
+}
+
+
+void algoritmoInterpolacion (int a[], int n)
+{
+    fstream archivo;
+    archivo.open("interpolacion.txt", ios::app);
+    int primero = 0;
+
+    int ultimo = n-1;
+
+    int medio;
+
+    int cont=0;
+
+    int num;
+    cout <<"Ingrese numero a buscar: ";
+    cin >> num;
+    archivo << "Numero a buscar : " <<num;
+    while(a[primero] != num && cont<=7 )
+    {
+        medio = primero + ((num - a[primero])*(ultimo-primero))/(a[ultimo]-a[primero]);
+        if(a[medio]<num)
+        {
+            primero = medio +1;
+        }
+        else if(a[medio]>num)
+        {
+            ultimo = medio-1;
+        }
+        else
+        {
+            primero = medio;
+        }
+        cont++;
+    }
+    if(a[primero]==num)
+    {
+        archivo<<"\nELEMENTO ENCONTRADO EN LA POSICION -> " << primero;
+        cout<<"ELEMENTO ENCONTRADO EN LA POSICION -> "<< primero;;
+    }
+    else
+    {
+        archivo<<"\nELEMENTO NO ENCONTRADO";
+        cout<<"ELEMENTO NO ENCONTRADO";
+    }
+    archivo.close();
 }
 

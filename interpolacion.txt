@@ -1,0 +1,2 @@
+Numero a buscar : 12
+ELEMENTO ENCONTRADO EN LA POSICION -> 1

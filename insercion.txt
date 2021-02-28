@@ -1,0 +1,4 @@
+|12||3|
+|3||12|
+El tamanio del arreglo: 2
+La suma del arreglo es: 15
