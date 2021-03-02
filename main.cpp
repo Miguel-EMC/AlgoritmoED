@@ -1,114 +1,74 @@
 #include <iostream>
-using namespace std;
 #include <fstream>
+using namespace std;
 
-void menudeOpciones();
-void escribirArchivo();
-void leerArchivo();
+int mitad (int arr[], int pinicial, int pfinal);
+
+void ordenar(int arr[], int pinicial, int pfinal);
 
 
-int main(){
-  
- menudeOpciones();
-  
+
+int main()
+{ 
+  ofstream registro;
+  registro.open("Quicksort.txt",ios::app);
+    int A[10]={88, -6, 69, -33, 98, 7, 23, -5, 0, 100};
+    registro<<"Quicksort"<<endl;
+    for (int i=0; i<10;i++)
+    {
+
+      registro<<"|"<<A[i]<<"|";
+        cout<<"|"<<A[i]<<"|";
+    }
+    registro<<endl;
+    ordenar(A,0,9);
+    for (int i=0; i<10;i++)
+    {
+      registro<<"|"<<A[i]<<"|";
+        cout<<"|"<<A[i]<<"|";
+    }
+    
+    return 0;
 }
 
-void menudeOpciones(){
-
-int opc;
-
-do{
- cout<<"\t\t\t******MENU**********"<<endl;
- cout<<"  \t\t1- INGRESAR DATOS"<<endl;
- cout<<"  \t\t2- MOSTRAR DATOS"<<endl;
- cout<<"Ingrese el numero de su opcion: "<<endl;
- cin>>opc;
-  switch(opc){
-  case  1:
-
-   escribirArchivo();
-
-  break;
-
-  case 2:
-
-    leerArchivo();
-  break;
-  }
-
-} while (opc != 2);
-
-}
-
-void escribirArchivo()
+int mitad (int arr[], int pinicial, int pfinal)
 {
-  
-   string nombre;
-   string apellido;
-   string carrera;
-   int edad;
-   char n;
-    ofstream archivoprueba;
-    string nombrearchivo;
-    cout<<"EL NOMBRE DE SU LIBRETA ES >> libreta.txt << \n";
-    cout<<"INGRESE NOMBRE DEL ARCHIVO \n";
-    while(getchar()!='\n'); 
-    getline(cin,nombrearchivo);
-    archivoprueba.open(nombrearchivo.c_str(),ios::out );
-
-  do{
-    cout<<"---------------------------------------------\n";
-   cout<<"INGRESE EL NOMBRE: ";
-   getline(cin,nombre);
-
-   cout<<"INGRESE EL APELLIDO: ";
-   getline(cin,apellido);
-
-   cout<<"INGRESE LA CARRERA: ";
-   getline(cin,carrera);
-
-   cout<<"INGRESE LA EDAD: ";
-   cin>>edad;
-   
-   archivoprueba<<nombre<<" "<<apellido<<" "<<carrera<<" "<<edad<<endl;
-   cout<<"---------------------------------------------\n";
-   cout<<"DESEA INGRESAR OTRO CONTACTO S/N ";
-   cin>>n;
-   cin.ignore();
-
-  }while(n=='s');
-   
-   archivoprueba.close();
+    return arr[(pinicial + pfinal) / 2];
 }
 
 
-void leerArchivo()
+void ordenar(int arr[], int pinicial, int pfinal)
 {
- string nombre;
- string apellido;
- string carrera;
- int edad;
-
- ifstream archivolectura("libreta.txt");
- string texto;
-   cout<<"---------------------------------------------\n";
-   cout<<"\t\t*** CONTACTOS REGISTRADOS *** \n";
- while(!archivolectura.eof())
- {
-  archivolectura>>nombre>>apellido>>carrera>>edad;
-
-  if (!archivolectura.eof()){
-
-   
-   cout<<"\t>> NOMBRE "<<nombre<<endl;
-   cout<<"\t>> APELLIDO "<<apellido<<endl;
-   cout<<"\t>> CARRERA "<<carrera<<endl;
-   cout<<"\t>> EDAD "<<edad<<endl;
-  cout<<"---------------------------------------------\n";
-  }
-
- }
-
-archivolectura.close();
+    
+    int i=pinicial;
+    int j=pfinal;
+    int temp;
+    int piv=mitad(arr,pinicial,pfinal); 
+    
+    do
+    {
+        while (arr[i] < piv)
+          {
+              i++; 
+          }
+          while (arr[j] > piv)
+          {
+              j--;
+          } 
+          
+          if (i <= j) 
+          { 
+               temp = arr[i]; 
+               arr[i] = arr[j]; 
+               arr[j] = temp; 
+               i++; 
+               j--; 
+          } 
+    }
+     while (i <= j);
+     
+     if (pinicial < j) 
+          ordenar(arr, pinicial, j); 
+     if (i < pfinal) 
+          ordenar(arr, i, pfinal); 
 }
-
