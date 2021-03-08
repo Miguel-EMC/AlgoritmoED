@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1615241113 source:d:\documentos\algoritmos y estructuras de datos\quicksort\main.cpp
+	<iostream>
+	"ordenar.h"
+
+1615231081 d:\documentos\algoritmos y estructuras de datos\quicksort\ordenar.h
+	<iostream>
+	"mitad.h"
+
+1615231081 d:\documentos\algoritmos y estructuras de datos\quicksort\mitad.h
+	<iostream>
+
