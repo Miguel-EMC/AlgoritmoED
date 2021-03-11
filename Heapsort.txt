@@ -1,0 +1,5 @@
+SIN ORDENAR
+arreglo de elementos originales
+|1||2||3||-3||0|
+HEAPSORT
+|-3||0||1||2||3|
