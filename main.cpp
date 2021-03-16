@@ -1,114 +1,36 @@
 #include <iostream>
-using namespace std;
 #include <fstream>
+#include "Heapsort.h"
+using namespace std;
+void heapsort(float b[],int n);
 
-void menudeOpciones();
-void escribirArchivo();
-void leerArchivo();
 
 
-int main(){
+int main() {
+  ofstream registro;
+  registro.open("Heapsort”.txt",ios::app);
+  registro<<"SIN ORDENAR"<<endl;
+  float numerosuno[50];
+ int numeros;
+  cout<<"Ingrese el numero de elementos"<<endl;
+  cin>>numeros;
+  for(int i=1;i<=numeros;i++){
+    cout<<"Numeros"<<endl;
+    cin>>numerosuno[i];
+  }
+  for(int i=1;i<=numeros;i++){
+    cout<<"|"<<numerosuno[i];
+    registro<<"|"<<numerosuno[i]<<"|";
+  }
+  heapsort(numerosuno, numeros);
+  registro<<endl;
+  cout<<endl;
+  registro<<"HEAPSORT"<<endl;
+  cout<<"Ordenamiento"<<endl;
   
- menudeOpciones();
-  
-}
-
-void menudeOpciones(){
-
-int opc;
-
-do{
- cout<<"\t\t\t******MENU**********"<<endl;
- cout<<"  \t\t1- INGRESAR DATOS"<<endl;
- cout<<"  \t\t2- MOSTRAR DATOS"<<endl;
- cout<<"Ingrese el numero de su opcion: "<<endl;
- cin>>opc;
-  switch(opc){
-  case  1:
-
-   escribirArchivo();
-
-  break;
-
-  case 2:
-
-    leerArchivo();
-  break;
+  for(int i=1;i<=numeros;i++){
+    cout<<"|"<<numerosuno[i];
+    registro<<"|"<<numerosuno[i]<<"|";
   }
 
-} while (opc != 2);
-
 }
-
-void escribirArchivo()
-{
-  
-   string nombre;
-   string apellido;
-   string carrera;
-   int edad;
-   char n;
-    ofstream archivoprueba;
-    string nombrearchivo;
-    cout<<"EL NOMBRE DE SU LIBRETA ES >> libreta.txt << \n";
-    cout<<"INGRESE NOMBRE DEL ARCHIVO \n";
-    while(getchar()!='\n'); 
-    getline(cin,nombrearchivo);
-    archivoprueba.open(nombrearchivo.c_str(),ios::out );
-
-  do{
-    cout<<"---------------------------------------------\n";
-   cout<<"INGRESE EL NOMBRE: ";
-   getline(cin,nombre);
-
-   cout<<"INGRESE EL APELLIDO: ";
-   getline(cin,apellido);
-
-   cout<<"INGRESE LA CARRERA: ";
-   getline(cin,carrera);
-
-   cout<<"INGRESE LA EDAD: ";
-   cin>>edad;
-   
-   archivoprueba<<nombre<<" "<<apellido<<" "<<carrera<<" "<<edad<<endl;
-   cout<<"---------------------------------------------\n";
-   cout<<"DESEA INGRESAR OTRO CONTACTO S/N ";
-   cin>>n;
-   cin.ignore();
-
-  }while(n=='s');
-   
-   archivoprueba.close();
-}
-
-
-void leerArchivo()
-{
- string nombre;
- string apellido;
- string carrera;
- int edad;
-
- ifstream archivolectura("libreta.txt");
- string texto;
-   cout<<"---------------------------------------------\n";
-   cout<<"\t\t*** CONTACTOS REGISTRADOS *** \n";
- while(!archivolectura.eof())
- {
-  archivolectura>>nombre>>apellido>>carrera>>edad;
-
-  if (!archivolectura.eof()){
-
-   
-   cout<<"\t>> NOMBRE "<<nombre<<endl;
-   cout<<"\t>> APELLIDO "<<apellido<<endl;
-   cout<<"\t>> CARRERA "<<carrera<<endl;
-   cout<<"\t>> EDAD "<<edad<<endl;
-  cout<<"---------------------------------------------\n";
-  }
-
- }
-
-archivolectura.close();
-}
-
